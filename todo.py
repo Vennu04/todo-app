@@ -35,6 +35,7 @@ def delete_task(task_number):
     print(f"Task deleted: {removed['task']}")
 
 
+
 def main():
     print("Welcome to Todo App!")
     print("Commands: add | show | quit")
@@ -92,6 +93,39 @@ def main():
             show_tasks()
             num = int(input("Enter task number to delete: "))
             delete_task(num)
+        elif command == "quit":
+            print("Goodbye!")
+            break
+        else:
+            print("Unknown command. Try: add | show | complete | delete | quit")
+
+def main():
+    print("Welcome to Todo App!")
+    print("Commands: add | show | complete | delete | quit")
+    while True:
+        command = input("\nEnter command: ").strip().lower()
+        if command == "add":
+            task = input("Enter task: ").strip()
+            if not task:
+                print("Task cannot be empty!")
+            else:
+                add_task(task)
+        elif command == "show":
+            show_tasks()
+        elif command == "complete":
+            show_tasks()
+            try:
+                num = int(input("Enter task number to complete: "))
+                complete_task(num)
+            except ValueError:
+                print("Please enter a valid number!")
+        elif command == "delete":
+            show_tasks()
+            try:
+                num = int(input("Enter task number to delete: "))
+                delete_task(num)
+            except ValueError:
+                print("Please enter a valid number!")
         elif command == "quit":
             print("Goodbye!")
             break
