@@ -1,6 +1,23 @@
 # todo.py - Simple Command Line To-Do App
+import json
+import os
 
+SAVE_FILE = "tasks.json"
 tasks = []
+
+def save_tasks():
+    """Save tasks to a JSON file"""
+    with open(SAVE_FILE, "w") as f:
+        json.dump(tasks, f, indent=2)
+    print("Tasks saved!")
+
+def load_tasks():
+    """Load tasks from JSON file if it exists"""
+    global tasks
+    if os.path.exists(SAVE_FILE):
+        with open(SAVE_FILE, "r") as f:
+            tasks = json.load(f)
+        print(f"Loaded {len(tasks)} task(s) from save file.")
 
 def add_task(task):
     """Add a new task to the list"""
@@ -34,74 +51,10 @@ def delete_task(task_number):
     removed = tasks.pop(task_number - 1)
     print(f"Task deleted: {removed['task']}")
 
-
-
 def main():
-    print("Welcome to Todo App!")
-    print("Commands: add | show | quit")
-    while True:
-        command = input("\nEnter command: ").strip().lower()
-        if command == "add":
-            task = input("Enter task: ").strip()
-            add_task(task)
-        elif command == "show":
-            show_tasks()
-        elif command == "quit":
-            print("Goodbye!")
-            break
-        else:
-            print("Unknown command. Try: add | show | quit")
-
-if __name__ == "__main__":
-
-    main()
-def main():
-    print("Welcome to Todo App!")
-    print("Commands: add | show | complete | quit")
-    while True:
-        command = input("\nEnter command: ").strip().lower()
-        if command == "add":
-            task = input("Enter task: ").strip()
-            add_task(task)
-        elif command == "show":
-            show_tasks()
-        elif command == "complete":
-            show_tasks()
-            num = int(input("Enter task number to complete: "))
-            complete_task(num)
-        elif command == "quit":
-            print("Goodbye!")
-            break
-        else:
-            print("Unknown command. Try: add | show | complete | quit")
-
-def main():
-    print("Welcome to Todo App!")
-    print("Commands: add | show | complete | delete | quit")
-    while True:
-        command = input("\nEnter command: ").strip().lower()
-        if command == "add":
-            task = input("Enter task: ").strip()
-            add_task(task)
-        elif command == "show":
-            show_tasks()
-        elif command == "complete":
-            show_tasks()
-            num = int(input("Enter task number to complete: "))
-            complete_task(num)
-        elif command == "delete":
-            show_tasks()
-            num = int(input("Enter task number to delete: "))
-            delete_task(num)
-        elif command == "quit":
-            print("Goodbye!")
-            break
-        else:
-            print("Unknown command. Try: add | show | complete | delete | quit")
-
-def main():
-    print("Welcome to Todo App!")
-    print("Commands: add | show | complete | delete | quit")
+    print("Welcome to Todo App v1.1.0!")
+    load_tasks()
+    print("Commands: add | show | complete | delete | save | quit")
     while True:
         command = input("\nEnter command: ").strip().lower()
         if command == "add":
@@ -126,8 +79,14 @@ def main():
                 delete_task(num)
             except ValueError:
                 print("Please enter a valid number!")
+        elif command == "save":
+            save_tasks()
         elif command == "quit":
+            save_tasks()
             print("Goodbye!")
             break
         else:
-            print("Unknown command. Try: add | show | complete | delete | quit")
+            print("Unknown command. Try: add | show | complete | delete | save | quit")
+
+if __name__ == "__main__":
+    main()
